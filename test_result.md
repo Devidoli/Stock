@@ -230,14 +230,10 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus:
-    - "Candlestick Image Analysis API"
-    - "AI Chat API"
-    - "Image Upload Interface"
-    - "AI Chatbot Interface"
+  current_focus: []
   stuck_tasks: []
-  test_all: true
-  test_priority: "high_first"
+  test_all: false
+  test_priority: "completed"
 
 agent_communication:
   - agent: "main"
