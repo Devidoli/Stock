@@ -66,6 +66,25 @@ def prepare_for_mongo(data):
                 data[key] = [prepare_for_mongo(item) if isinstance(item, dict) else item for item in value]
     return data
 
+def prepare_from_mongo(data):
+    """Convert MongoDB documents to JSON-serializable format"""
+    if isinstance(data, list):
+        return [prepare_from_mongo(item) for item in data]
+    elif isinstance(data, dict):
+        result = {}
+        for key, value in data.items():
+            if key == '_id':
+                result[key] = str(value)  # Convert ObjectId to string
+            elif isinstance(value, dict):
+                result[key] = prepare_from_mongo(value)
+            elif isinstance(value, list):
+                result[key] = prepare_from_mongo(value)
+            else:
+                result[key] = value
+        return result
+    else:
+        return data
+
 async def get_llm_chat(session_id: str, system_message: str = None):
     """Initialize LLM chat with session ID"""
     api_key = os.environ.get('EMERGENT_LLM_KEY')
