@@ -263,6 +263,7 @@ async def get_analysis_history(session_id: str):
     """Get analysis history for a session"""
     try:
         analyses = await db.candlestick_analyses.find({"session_id": session_id}).sort("timestamp", -1).to_list(50)
+        analyses = prepare_from_mongo(analyses)
         return {"analyses": analyses, "session_id": session_id}
     except Exception as e:
         logging.error(f"Error fetching analysis history: {str(e)}")
