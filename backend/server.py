@@ -252,6 +252,7 @@ async def get_chat_history(session_id: str):
     """Get chat history for a session"""
     try:
         chats = await db.chat_messages.find({"session_id": session_id}).sort("timestamp", 1).to_list(100)
+        chats = prepare_from_mongo(chats)
         return {"chats": chats, "session_id": session_id}
     except Exception as e:
         logging.error(f"Error fetching chat history: {str(e)}")
