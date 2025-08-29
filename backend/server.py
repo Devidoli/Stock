@@ -186,7 +186,7 @@ async def chat_with_ai(request: ChatRequest):
 @api_router.post("/analyze-candlestick")
 async def analyze_candlestick_chart(
     file: UploadFile = File(...),
-    session_id: str = "default"
+    session_id: str = Form("default")
 ):
     """Upload and analyze candlestick chart image"""
     try:
